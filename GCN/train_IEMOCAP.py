@@ -354,8 +354,11 @@ if __name__ == '__main__':
             valid_loss, valid_acc, _, _, _, valid_fscore, _ = train_or_eval_model(model, loss_function, valid_loader, e)
             test_loss, test_acc, test_label, test_pred, test_mask, test_fscore, attentions = train_or_eval_model(model, loss_function, test_loader, e)
             all_fscore.append(test_fscore)
-            #torch.save({'model_state_dict': model.state_dict()}, path + name + args.base_model + '_' + str(e) + '.pkl')
             
+            #Con este guardamos los pesos y datos del modelo, pero tendriamos que recrearlo por lo tanto no lo usamos
+            #torch.save({'model_state_dict': model.state_dict()}, path + name + args.base_model + '_' + str(e) + '.pkl')
+           
+            #Con este guardamos el modelo por lo tanto es el que usaremos
             #torch.save(model,path + name + args.base_model + '_' + str(e) + '.pth')
 
         if args.tensorboard:
