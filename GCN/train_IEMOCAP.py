@@ -138,10 +138,10 @@ def train_or_eval_graph_model(model, loss_function, dataloader, epoch, cuda, opt
         textf, visuf, acouf, qmask, umask, label = [d.cuda() for d in data[:-1]] if cuda else data[:-1]
 
         lengths = [(umask[j] == 1).nonzero().tolist()[-1][0] + 1 for j in range(len(umask))]
-        print("textf ", textf.size())
-        print("qmask ", qmask.size())
-        print("umask ", umask.size())
-        print("lengths ", lengths)
+        #print("textf ", textf.size())
+        #print("qmask ", qmask.size())
+        #print("umask ", umask.size())
+        #print("lengths ", lengths)
         #print("data ", data.size())
         #print("data ", data)
         log_prob, e_i, e_n, e_t, e_l = model(textf, qmask, umask, lengths)
@@ -335,28 +335,28 @@ if __name__ == '__main__':
         start_time = time.time()
 
         if args.graph_model:
-           # path='/content/gdrive/MyDrive/GCN/models/LSTM/GNC'
-            #path='/content/gdrive/MyDrive/GCN/models/GRU/GN'
-            #path='/content/gdrive/MyDrive/GCN/models/RNN/GN'
-            #path='/content/gdrive/MyDrive/GCN/models/NONE/GN'
+            path='/content/GNC'
             train_loss, train_acc, _, _, train_fscore, _, _, _, _, _ = train_or_eval_graph_model(model, loss_function, train_loader, e, cuda, optimizer, True)
             valid_loss, valid_acc, _, _, valid_fscore, _, _, _, _, _ = train_or_eval_graph_model(model, loss_function, valid_loader, e, cuda)
             test_loss, test_acc, test_label, test_pred, test_fscore, _, _, _, _, _ = train_or_eval_graph_model(model, loss_function, test_loader, e, cuda)
             all_fscore.append(test_fscore)
+            
+            #Con este guardamos los pesos y datos del modelo, pero tendriamos que recrearlo por lo tanto no lo usamos
             #torch.save({'model_state_dict': model.state_dict()}, path + name + args.base_model + '_' + str(e) + '.pkl')
-            #print("labels=  ", test_label)
+            
+            #Con este guardamos el modelo por lo tanto es el que usaremos
             #torch.save(model,path + name + args.base_model + '_' + str(e) + '.pth')
 
         else:
 
-            #path='/content/gdrive/MyDrive/GCN/weights/LSTM/'
-            #path='/content/gdrive/MyDrive/GCN/weights/GRU/'
-            #path='/content/gdrive/MyDrive/GCN/weights/RNN/GCN'
+            path='/content/NORMAL'
             train_loss, train_acc, _, _, _, train_fscore, _ = train_or_eval_model(model, loss_function, train_loader, e, optimizer, True)
             valid_loss, valid_acc, _, _, _, valid_fscore, _ = train_or_eval_model(model, loss_function, valid_loader, e)
             test_loss, test_acc, test_label, test_pred, test_mask, test_fscore, attentions = train_or_eval_model(model, loss_function, test_loader, e)
             all_fscore.append(test_fscore)
             #torch.save({'model_state_dict': model.state_dict()}, path + name + args.base_model + '_' + str(e) + '.pkl')
+            
+            #torch.save(model,path + name + args.base_model + '_' + str(e) + '.pth')
 
         if args.tensorboard:
             writer.add_scalar('test: accuracy/loss', test_acc/test_loss, e)
