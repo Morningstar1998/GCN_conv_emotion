@@ -8,7 +8,7 @@ class IEMOCAPDataset(Dataset):
     def __init__(self, train=True):
         self.videoIDs, self.videoSpeakers, self.videoLabels, self.videoText,\
         self.videoAudio, self.videoVisual, self.videoSentence, self.trainVid,\
-        self.testVid = pickle.load(open('/content/gdrive/MyDrive/GCN/conv-emotion/DialogueGCN/IEMOCAP_features/IEMOCAP_features.pkl', 'rb'), encoding='latin1')
+        self.testVid = pickle.load(open('/content/GCN_conv_emotion/GCN/IEMOCAP_features/IEMOCAP_features.pkl', 'rb'), encoding='latin1')
         '''
         label index mapping = {'hap':0, 'sad':1, 'neu':2, 'ang':3, 'exc':4, 'fru':5}
         '''
