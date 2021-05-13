@@ -10,15 +10,6 @@ Original file is located at
 #from google.colab import drive
 #drive.mount('/content/gdrive')
 #!ln -s /content/gdrive/My\ Drive/ /mydrive
-
-pip install torch-scatter #-f https://pytorch-geometric.com/whl/torch-1.8.1+cu101.html
-pip install torch-sparse #-f https://pytorch-geometric.com/whl/torch-1.8.1+cu101.html
-pip install torch-cluster #-f #https://pytorch-geometric.com/whl/torch-1.8.1+cu101.html
-pip install torch-spline-conv #-f https://pytorch-geometric.com/whl/torch-1.8.1+cu101.html
-pip install torch-geometric
-pip install transformers
-pip install sentencepiece
-
 import sys
 lib='/content/GCN_conv_emotion/GCN'
 sys.path.insert(0,lib)
